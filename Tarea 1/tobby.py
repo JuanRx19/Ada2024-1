@@ -10,13 +10,7 @@ def solve(n, k):
 
     iterator = 0
     for cases in range(k):
-        if(iterator < len(med) - 1):
-            ant = heapq.heappop(tobby)
-            heapq.hea
-            iterator+=1
-        else:
-            iterator=0
-        print(iterator)
+        pass
     print(med)
 
 def main():
