@@ -1,3 +1,15 @@
-p = [(60, "L"), (60, "p")]
+import heapq
 
-print(min(p))
+h = []
+heapq.heappush(h, (40, "Aceta"))
+heapq.heappush(h, (20, "Lor"))
+heapq.heappush(h, (80, "Aceta"))
+heapq.heappush(h, (40, "Lor"))
+heapq.heappush(h, (60, "Lor"))
+
+
+print(heapq.heappop(h))
+print(heapq.heappop(h))
+print(heapq.heappop(h))
+print(heapq.heappop(h))
+print(heapq.heappop(h))
