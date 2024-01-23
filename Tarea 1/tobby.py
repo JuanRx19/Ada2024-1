@@ -12,7 +12,7 @@ def solve(n, k):
     for cases in range(k):
         if(iterator < len(med) - 1):
             ant = heapq.heappop(tobby)
-            heapq.hea
+            heapq.heappush((med[iterator][0], med[iterator][1]))
             iterator+=1
         else:
             iterator=0
