@@ -2,21 +2,17 @@ from sys import stdin
 import heapq
 
 def solve(n, k):
-    med = []
     suma = []
     tobby = []
     for i in range(n):
         m, t = stdin.readline().split()
         suma.append(int(t))
-        med.append((int(t), i, m))
-
-    for i in range(len(med)):
-        heapq.heappush(tobby, med[i])
+        heapq.heappush(tobby, (int(t), i, m))
 
     for _ in range(k):
         ans = heapq.heappop(tobby)
         #print(ans)
-        print(str(ans[0]) + " " + ans[2])
+        print(f"{ans[0]} {ans[2]}")
         heapq.heappush(tobby, (ans[0] + suma[ans[1]], ans[1], ans[2]))
 
 def main():
