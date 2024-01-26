@@ -5,15 +5,14 @@ def solve(N, H, Ta, Td):
     hippo.sort()
     time = 0
     iter = 0
-    while(len(hippo) > 1):
+    while(iter < len(hippo)-1):
         ver = hippo.pop(len(hippo)-1)
-        if(ver + hippo[0] < H):
-            hippo.pop(0)
+        if(ver + hippo[iter] < H):
             time+=Td
+            iter+=1
         else:
             time+=Ta
-        iter+=1
-    if(len(hippo) == 1):
+    if(len(hippo)-1 == iter):
         time+=Ta
     if(time > N * Ta):
         time = N * Ta
