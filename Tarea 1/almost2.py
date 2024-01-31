@@ -2,7 +2,8 @@ from sys import stdin
 
 def find(d, p):
     ans = 0
-    if(d[p][0] == p):
+    tam = len(d)
+    if(d[p][0] == tam * p):
         ans = p
     else:
         ans = find(d, d[p][0])
@@ -13,23 +14,38 @@ def union(d, p, q):
     padre = find(d, d[p][0])
     hijo = find(d, d[q][0])
     if(padre != hijo):
-        d[q][0] = padre
         d[hijo][0] = padre
         d[padre][1] += d[hijo][1]
         d[padre][2] += d[hijo][2]
+        d[hijo][1] = d[padre][1]
     return d
 
 def move(d, p, q):
     padre = find(d, d[p][0])
     hijo = find(d, d[q][0])
+    flag = 0
     if(padre == hijo):
         ans = d
     else:
+        if(d[p][0] == p):
+            nuevo_padre = 1
+            for num in d:
+                find(d, num)
+                if(d[num][0] == p and num != d[num][0] and flag == 0):
+                    nuevo_padre = num
+                    d[num][1] = d[p][1] - p
+                    d[num][2] = d[p][2] - 1
+                    flag = 1
+                if(d[num][0] == p and num != d[num][0]):
+                    d[num][0] = nuevo_padre
+        else:
+            for num in d:
+                find(d, num)
         d[p][0] = hijo
-        d[hijo][1] += p
         d[padre][1] -= p
-        d[hijo][2] += 1
         d[padre][2] -= 1
+        d[hijo][1] += p
+        d[hijo][2] += 1
         ans = d
 
     return ans
@@ -37,11 +53,7 @@ def move(d, p, q):
 def solve(n, m):
     d = {}
     for num in range(1, n+1):
-        d[num] = [n+num]
-
-    for num in range(n+1, (n*2)+1):
-        d[num] = [num, num-n, 1, 1]
-
+        d[num] = [num, num, 1]
     for _ in range(m):
         opc = list(map(int, stdin.readline().split()))
         if(opc[0] == 1):
@@ -49,8 +61,7 @@ def solve(n, m):
         elif(opc[0] == 2):
             d = move(d, opc[1], opc[2])
         elif(opc[0] == 3):
-            ans = find(d, opc[1])
-            print(f"{d[ans][2]} {d[ans][1]}")
+            print(f"{d[find(d, opc[1])][2]} {d[find(d, opc[1])][1]}")
             
 def main():
     line = stdin.readline().strip()
