@@ -31,15 +31,18 @@ def build(A, tree, l, r, v):
         build(A, tree, mid + 1, r, v + 2 * (mid - l + 1))
         tree[v] = tree[v + 1] + tree[v + 2 * (mid - l + 1)]
 
-def mostrar(A, tree, l, r, v):
+def mostrar(A, tree, L, R, l, r, v, h):
     if l == r:
-        if(l > 2):
+        if(l >= L and r <= R):
+            tree[v] = h
             print(tree[v])
     else:
         mid = l + ((r - l) >> 1)
-        mostrar(A, tree, l, mid, v + 1)
-        mostrar(A, tree, mid + 1, r, v + 2 * (mid - l + 1))
+        mostrar(A, tree, L, R, l, mid, v + 1, h)
+        mostrar(A, tree, L, R, mid + 1, r, v + 2 * (mid - l + 1), h)
+        tree[v] = tree[v + 1] + tree[v + 2 * (mid - l + 1)]
 
 tree = [0] * 2*len(A)
 build(A, tree, 0, len(A)-1, 0)
-mostrar(A, tree, 0, len(A)-1, 0)
+mostrar(A, tree, 2, 4, 0, len(A)-1, 0, 0)
+print(tree[0])
