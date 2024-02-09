@@ -51,12 +51,23 @@ def push(v, v1, v2):
         marked[v1] = marked[v2] = True
         marked[v] = False
             
+def sum(v, L, R, l, r):
+    ans = None
+    if l > r: ans = 0
+    elif l == L and r == R: ans = tree[v]
+    else:
+        m = L + ((R - L) >> 1)
+        ans = sum(v + 1, L, m, l, min(r, m)) + sum(v + 2 * (m - L + 1), m + 1, R, max(l, m + 1), r)
+    return ans
+
 n = 9
 build([3, 2, 5, 7, 4, 6, 2, 5, 4], 0, 0, n - 1)
-for i in range(2 * n):
+update(0, 0, n-1, 6, n-1, 0)
+print(query_pos(0, 0, n - 1, 8))
+#print(sum(0, 0, n-1, 0, n-1))
+"""for i in range(2 * n):
     print(str(tree[i]) + " ", end = '')
 print()
-
 print(query_pos(0, 0, n - 1, 6))
 print(query_pos(0, 0, n - 1, 8))
 update(0, 0, n - 1, 0, 5, 9)
@@ -67,4 +78,4 @@ print(query_pos(0, 0, n - 1, 4))
 print(query_pos(0, 0, n - 1, 1))
 for i in range(2 * n):
     print(str(tree[i]) + " ", end = '')
-print()
+print()"""

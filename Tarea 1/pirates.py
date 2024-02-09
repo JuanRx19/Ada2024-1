@@ -1,15 +1,5 @@
 from sys import stdin
 
-def build(A, tree, l, r, v):
-    if l == r:
-        tree[v] = int(A[l])
-    else:
-        mid = l + ((r - l) >> 1)
-        build(A, tree, l, mid, v + 1)
-        build(A, tree, mid + 1, r, v + 2 * (mid - l + 1))
-        tree[v] = tree[v + 1] + tree[v + 2 * (mid - l + 1)]
-    return tree
-
 def construir_str(M):
     str = ""
     cont = 0
@@ -28,6 +18,16 @@ def construir_str(M):
     
     return list(map(int, str))
 
+def build(A, tree, l, r, v):
+    if l == r:
+        tree[v] = int(A[l])
+    else:
+        mid = l + ((r - l) >> 1)
+        build(A, tree, l, mid, v + 1)
+        build(A, tree, mid + 1, r, v + 2 * (mid - l + 1))
+        tree[v] = tree[v + 1] + tree[v + 2 * (mid - l + 1)]
+    return tree
+
 def sum(tree, v, L, R, l, r):
     ans = None
     if l > r:
@@ -39,29 +39,31 @@ def sum(tree, v, L, R, l, r):
         ans = sum(tree, v + 1, L, mid, l, min(r, mid)) + sum(tree, v + 2 * (mid - L + 1), mid + 1, R, max(l, mid + 1), r)
     return ans
 
-def update_1(A, tree, L, R, l, r, v):
-    if l == r:
-        if(l >= L and r <= R):
-            if(tree[v] == 0):
-                tree[v] = 1
-            elif(tree[v] == 1):
-                tree[v] = 0
+def update(tree, v, L, R, left, right, h):
+    if L == R:
+        tree[v] = h
     else:
-        mid = l + ((r - l) >> 1)
-        update_1(A, tree, L, R, l, mid, v + 1)
-        update_1(A, tree, L, R, mid + 1, r, v + 2 * (mid - l + 1))
-        tree[v] = tree[v + 1] + tree[v + 2 * (mid - l + 1)]
+        mid = L + ((R - L) >> 1)
+        if left <= mid:
+            update(tree, v + 1, L, mid, left, right, h)
+        if right > mid:
+            update(tree, v + 2 * (mid - L + 1), mid + 1, R, left, right, h)
+        tree[v] = tree[v + 1] + tree[v + 2 * (mid - L + 1)]
     return tree
 
-def update_2(A, tree, L, R, l, r, v, h):
-    if l == r:
-        if(l >= L and r <= R):
-            tree[v] = h
+def update_2(tree, v, L, R, left, right):
+    if L == R:
+        if(tree[v] == 1):
+            tree[v] = 0
+        else:
+            tree[v] = 1
     else:
-        mid = l + ((r - l) >> 1)
-        update_2(A, tree, L, R, l, mid, v + 1, h)
-        update_2(A, tree, L, R, mid + 1, r, v + 2 * (mid - l + 1), h)
-        tree[v] = tree[v + 1] + tree[v + 2 * (mid - l + 1)]
+        mid = L + ((R - L) >> 1)
+        if left <= mid:
+            update_2(tree, v + 1, L, mid, left, right)
+        if right > mid:
+            update_2(tree, v + 2 * (mid - L + 1), mid + 1, R, left, right)
+        tree[v] = tree[v + 1] + tree[v + 2 * (mid - L + 1)]
     return tree
 
 def solve(A):
@@ -74,11 +76,11 @@ def solve(A):
         i = int(i)
         j = int(j)
         if(ele == "F"):
-            tree = update_2(A, tree, i, j, 0, len(A)-1, 0, 1)
+            tree = update(tree, 0, 0, len(A)-1, i, j, 1)
         elif(ele == "E"):
-            tree = update_2(A, tree, i, j, 0, len(A)-1, 0, 0)
+            tree = update(tree, 0, 0, len(A)-1, i, j, 0)
         elif(ele == "I"):
-            tree = update_1(A, tree, i, j, 0, len(A)-1, 0)
+            tree = update_2(tree, 0, 0, len(A)-1, i, j)
         else:
             print(f"Q{Q+1}: {sum(tree, 0, 0, len(A)-1, i, j)}")
             Q+=1

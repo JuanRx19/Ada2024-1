@@ -31,18 +31,30 @@ def build(A, tree, l, r, v):
         build(A, tree, mid + 1, r, v + 2 * (mid - l + 1))
         tree[v] = tree[v + 1] + tree[v + 2 * (mid - l + 1)]
 
-def update_2(A, tree, L, R, l, r, v, h):
-    if l == r:
-        if(l >= L and r <= R):
-            tree[v] = h
-            print(tree[v])
+def sum(tree, v, L, R, l, r):
+    ans = None
+    if l > r:
+        ans = 0
+    elif l == L and r == R:
+        ans = tree[v]
     else:
-        mid = l + ((r - l) >> 1)
-        update_2(A, tree, L, R, l, mid, v + 1, h)
-        update_2(A, tree, L, R, mid + 1, r, v + 2 * (mid - l + 1), h)
-        tree[v] = tree[v + 1] + tree[v + 2 * (mid - l + 1)]
+        mid = L + ((R - L) >> 1)
+        ans = sum(tree, v + 1, L, mid, l, min(r, mid)) + sum(tree, v + 2 * (mid - L + 1), mid + 1, R, max(l, mid + 1), r)
+    return ans
+
+def update(v, L, R, l, r, h):
+    if l <= r:
+        if l == L and r == R: tree[v] += h
+        else:
+            m = L + ((R - L) >> 1)
+            update(v + 1, L, m, l, min(r, m), h)
+            update(v + 2 * (m - L + 1), m + 1, R, max(l, m + 1), r, h)
+
 
 tree = [0] * 2*len(A)
 build(A, tree, 0, len(A)-1, 0)
-update_2(A, tree, 2, 4, 0, len(A)-1, 0, 0)
+update(0, 0, len(A)-1, 1, 4, 1)
+#update_2(0, 0, len(A)-1, 0, len(A)-1)
+#print(sum(tree, 0, 0, len(A)-1, 1, 4))
+#update_2(A, tree, 2, 4, 0, len(A)-1, 0, 0)
 print(tree[0])

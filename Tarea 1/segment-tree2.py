@@ -40,12 +40,12 @@ def update(v, L, R, pos, h):
         tree[v] = tree[v + 1] + tree[v + 2 * (mid - L + 1)]
 
         
-#build([1, 2, 3, 4, 5, 6], 0, 0, 5)
+build([1, 2, 3, 4, 5, 6], 0, 0, 5)
 """for i in range(14):
     print(str(tree[i]) + " ", end = '')
 print()"""
 
-build(list(map(int, "000000111111111111")), 0, 0, 17)
+#build(list(map(int, "000000111111111111")), 0, 0, 17)
 print(tree)
 print(sum(0, 0, 17, 1, 10))
 #print(sum(0, 0, 6, 0, 4))
