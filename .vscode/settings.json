@@ -1,5 +1,6 @@
 {
     "files.associations": {
+<<<<<<< HEAD
         "vector": "cpp",
         "atomic": "cpp",
         "bit": "cpp",
@@ -46,5 +47,8 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "algorithm": "cpp"
+=======
+        "iostream": "cpp"
+>>>>>>> 3c4d1127b53e031b9bf1ababfd04865b3bfbae61
     }
 }
