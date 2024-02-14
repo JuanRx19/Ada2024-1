@@ -1,30 +1,33 @@
 from sys import stdin
+import math
 
-def biseccion(f, a, b, v):
+def f(v, T):
+    return v * T
+
+def biseccion(f, a, b, v, T):
     low, hi, ans = a, b, None
-    eps = 1e-6
     iter = 0
     while iter < 50:
         mid = (hi + low) / 2
-        if v <= f(mid): 
+        if v <= f(mid, T): 
             hi = mid
         else: 
             low = mid
         iter += 1
         ans = low
-    return ans
-
-def f(D, T):
-    return D/T
+    return math.floor(ans)
 
 def solve(T, S, D):
-    print(D > T)
-    return biseccion(f, 0, 100000000, S) # T S D, D T S, D S T
+    ans = biseccion(f, 0, 5000000, abs(D * 1000000), T * 86400)
+    if(D > 0 and ans != 0):
+        print(f"Remove {ans} tons")
+    else:
+        print(f"Add {ans} tons")
 
 def main():
     C = int(stdin.readline())
     for _ in range(C):
         T, S, D = map(int, stdin.readline().split())
-        print(solve(T, S, D))
+        solve(T, S, D)
 
 main()
