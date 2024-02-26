@@ -30,4 +30,4 @@ def main():
         T, S, D = map(int, stdin.readline().split())
         solve(T, S, D)
 
-main()
+main()  
