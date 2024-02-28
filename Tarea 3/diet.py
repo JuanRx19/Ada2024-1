@@ -4,10 +4,10 @@ def solve(A, n, x):
     ans = 0
     if(n == 0 or x == 0):
         ans = 0
-    elif(n != 0 and x != 0 and A[n-1] > x):
-        ans = solve(A, n-1, x)
-    elif(n != 0 and x != 0 and A[n-1] <= x):
-        ans = max(solve(A, n-1, x - A[n-1]) + A[n-1], solve(A, n-1, x))
+    elif(n != 0 and x != 0 and x < 0):
+        ans = 0 #solve(A, n-1, x)
+    elif(n != 0 and x != 0 and x > 0):
+        ans = min(solve(A, n-1, x - A[n-1]) + A[n-1], solve(A, n-1, x) + A[n-1])
 
     return ans
 
