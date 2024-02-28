@@ -1,4 +1,4 @@
-from sys import stdin
+#from sys import stdin
 
 def solve(A, n, x):
     ans = 0
@@ -11,13 +11,14 @@ def solve(A, n, x):
 
     return ans
 
-def main():
+"""def main():
     C = int(stdin.readline())
     while(C != 0):
         calories = int(stdin.readline())
         tam = int(stdin.readline())
         A = list(map(int, input().split()))
         print(f"{solve(A, tam, calories)}")
-        C-=1
+        C-=1"""
 
-main()
+print(f"{solve([1230, 1050, 820, 890, 1150], 5, 2480)}")
+#main()
