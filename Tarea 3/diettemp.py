@@ -2,13 +2,13 @@ from sys import stdin
 
 def solve(A, n, x):
     ans = 0
-    if(n == 0 or x <= 0):
+    if(n == 0):
         ans = 0
-    elif(n != 0 and x > 0):
-        ans = min(solve(A, n-1, x - A[n-1]) + A[n-1], solve(A, n-1, x) + A[n-1])
-
+    elif(n != 0 and x-A[n-1] > 0):
+        ans = solve(A, n-1, x) or solve(A, n-1, x-A[n-1])
+    else:
+        ans = max(solve(A, n-1, x), solve(A, n-1, x-A[n-1]) + A[n-1])
     return ans
-
 def main():
     C = int(stdin.readline())
     while(C != 0):
@@ -21,5 +21,5 @@ def main():
         else:
             print("NO SOLUTION")
         C-=1
-
+        
 main()
