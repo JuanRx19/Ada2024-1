@@ -14,10 +14,13 @@ def solve(T, E, n, feces, mem):
         if(n == 0):
             ans = 0
         else:
-            if(n != 0 and feces != 0):
-                ans = min(solve(T, E, n-1, (feces - 1) + E[n-1], mem) + (T[n-1] >> 1), solve(T, E, n-1, feces + E[n-1], mem) + T[n-1])
+            if feces >= n:
+                ans = solve(T, E, n-1, (feces - 1) + E[n-1], mem) + (T[n-1] >> 1)
             else:
-                ans = solve(T, E, n-1, feces + E[n-1], mem) + T[n-1]
+                if(n != 0 and feces != 0):
+                    ans = min(solve(T, E, n-1, (feces - 1) + E[n-1], mem) + (T[n-1] >> 1), solve(T, E, n-1, feces + E[n-1], mem) + T[n-1])
+                else:
+                    ans = solve(T, E, n-1, feces + E[n-1], mem) + T[n-1]
         mem[(n, feces)] = ans
 
     return ans
