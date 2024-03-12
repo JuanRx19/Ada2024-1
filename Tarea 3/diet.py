@@ -10,9 +10,9 @@ def solve(A, n, x, mem):
         elif(n == 0 or x <= 0):
             ans = x
         elif(n != 0 and x > 0):
-            ans = max(solve(A, n-1, x - (A[n-1]), mem), solve(A, n-1, x, mem))
+            ans, mem = max(solve(A, n-1, x - A[n-1], mem), solve(A, n-1, x, mem))
         mem[(n, x)] = ans
-    return ans
+    return ans, mem
 
 def main():
     C = int(stdin.readline())
@@ -21,9 +21,10 @@ def main():
         calories = int(stdin.readline())
         tam = int(stdin.readline())
         A = list(map(int, input().split()))
-        ans = solve(A, tam, calories, mem) * -1
-        if(sum(A) >= calories):
-            print(f"{calories + ans}")
+        ans, mem = solve(A, tam, calories, mem)
+        #print(ans)
+        if(abs(ans) != float('inf')):
+            print(f"{calories + abs(ans)}")
         else:
             print("NO SOLUTION")
         C-=1
