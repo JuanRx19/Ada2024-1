@@ -13,7 +13,7 @@ from sys import stdin
     
     return ans"""
 
-def binarysearch(low, high, x):
+"""def binarysearch(low, high, x):
     ans = 0
     flag = 0
     while(flag == 0):
@@ -33,12 +33,29 @@ def solve(T):
         ans = 1
     else:
         ans = (binarysearch(1, T, T))**2
+    return ans"""
+
+def binarysearch(low, high, x):
+    ans = 0
+    if(x == 0):
+        ans = 0
+    elif(low == high):
+        ans = low * low
+    elif(low+1 == high):
+        ans = low * low
+    else:
+        mid = low + ((high-low)>>1)
+        if(mid**2 <= x):
+            ans = binarysearch(mid, high, x)
+        else:
+            ans = binarysearch(low, mid, x)
+    
     return ans
 
 def main():
     T = int(stdin.readline())
     while(T != 0):
-        print(solve(T))
+        print(binarysearch(1, T, T))
         T = int(stdin.readline())
 
 main()

@@ -1,22 +1,22 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <string>
 using namespace std;
-map<int, vector<int>> d;
 
-int find(int p){
+int find(int p, map<int, vector<int>> d){
     int ans = 0;
     if(d[p][0] == p){
         ans = p;
     }else{
-        ans = find(d[p][0]);
+        ans = find(d[p][0], d);
     }
     return ans;
 }
 
-void Union(int p, int q){
-    int padre = find(d[p][0]);
-    int hijo = find(d[q][0]);
+void Union(int p, int q, map<int, vector<int>> d){
+    int padre = find(d[p][0], d);
+    int hijo = find(d[q][0], d);
     if(padre != hijo){
         d[q][0] = padre;
         d[hijo][0] = padre;
@@ -25,10 +25,10 @@ void Union(int p, int q){
     }
 }
 
-void move(int p, int q){
+void move(int p, int q, map<int, vector<int>> d){
     int ans = 0;
-    int padre = find(d[p][0]);
-    int hijo = find(d[q][0]);
+    int padre = find(d[p][0], d);
+    int hijo = find(d[q][0], d);
     if(padre != hijo){
         d[p][0] = hijo;
         d[hijo][1] += p;
@@ -39,6 +39,7 @@ void move(int p, int q){
 }
 
 void solve(int n, int m){
+    map<int, vector<int>> d;
     int opc, v1, v2, ans = 0;
     for (int num = 1; num < n+1; num++)
     {
@@ -52,23 +53,23 @@ void solve(int n, int m){
 
     for (int op = 0; op < m; op++)
     {
-        scanf("%d", &opc);
+        cin >> opc;
         if(opc == 1){
-            scanf("%d %d", &v1, &v2);
-            Union(v1, v2);
+            cin >> v1 >> v2;
+            Union(v1, v2, d);
         }else if(opc == 2){
-            scanf("%d %d", &v1, &v2);
-            move(v1, v2);
+            cin >> v1 >> v2;
+            move(v1, v2, d);
         }else if(opc == 3){
-            scanf("%d", &v1);
-            ans = find(v1);
-            printf("%d %d\n", d[ans][2], d[ans][1]);
+            cin >> v1;
+            ans = find(v1, d);
+            cout << d[ans][2] << " " << d[ans][1] << endl;
         }
     }
 }
 int main(){
-    int n, m = 0;
-    while(cin >> n >> m){
+    int n, m;
+    while(cin>>n>>m){
         solve(n, m);
     }
 }
