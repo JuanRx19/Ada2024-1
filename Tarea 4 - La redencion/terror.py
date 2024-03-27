@@ -10,7 +10,7 @@ def solve(N, K, X, Y):
         Y[i] = Y[i] - X[i]
     
     Y.sort()
-
+    print(Y)
     for i in range(N):
         if(Y[i] < 0 and K != 0):
             K -= 1
