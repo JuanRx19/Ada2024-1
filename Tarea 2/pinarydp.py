@@ -43,7 +43,6 @@ def solve(A, n, mem):
             ans += nivel[1] + solve(A, n - nivel[0], mem)
             mem[n] = ans
 
-    
     return ans
 
 def main():
