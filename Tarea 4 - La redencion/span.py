@@ -3,20 +3,22 @@
 
 from sys import stdin
 
-def makeSet(v, p, rango):
+p, rango = [0 for _ in range(100)], [0 for _ in range(100)]
+
+def makeSet(v):
     p[v], rango[v] = v, 0
 
-def findSet(v, p, rango):
+def findSet(v):
     ans = None
     if v == p[v]:
         ans = v
     else:
-        p[v] = findSet(p[v], p, rango)
+        p[v] = findSet(p[v])
         ans = p[v]
     return ans
 
-def unionSet(u, v, p,  rango):
-    u, v = findSet(u, p, rango), findSet(v, p, rango)
+def unionSet(u, v):
+    u, v = findSet(u), findSet(v)
     if u != v:
         if rango[u] < rango[v]:
             u, v = v, u
@@ -24,29 +26,39 @@ def unionSet(u, v, p,  rango):
         if rango[u] == rango[v]:
             rango[u] += 1
 
-def kruskal(n, aristas, start, p, rango):
-    for i in range(1, n + 1): makeSet(i, p, rango)
+def kruskal(n, aristas, start):
+    for i in range(1, n + 1): makeSet(i)
     mst = []
-    for it in range(start, len(aristas)-1):
+    flag = 0
+    while(start != len(aristas)-1 and flag == 0):
+        u, v, c = aristas[start]
+        if findSet(u) != findSet(v):
+            unionSet(u, v)
+            mst.append(aristas[start])
+        
+        if(len(mst) == n-1):
+            flag = 1
+        start+=1
+    """for it in range(start, len(aristas)-1):
         u, v, c = aristas[it]
-        if findSet(u, p, rango) != findSet(v, p, rango):
-            unionSet(u, v, p, rango)
-            mst.append(aristas[it])
+        if findSet(u) != findSet(v):
+            unionSet(u, v)
+            mst.append(aristas[it])"""
+    print(mst)
     return mst
 
-def solve(n, k, grafo, p, rango):
+def solve(n, k, grafo):
     ans = float('inf')
     grafo.sort(key = lambda x: x[2])
     start = 0
     flag = 0
     while(flag == 0):
-        mst = kruskal(n, grafo, start, p, rango)
+        mst = kruskal(n, grafo, start)
         if(len(mst) < n-1):
             flag = 1
         else:
             ans = min(ans, mst[len(mst)-1][2] - mst[0][2])
             start+=1
-        k-=1
     #print(mst)
     if(ans == float('inf')):
         ans = -1
@@ -54,7 +66,6 @@ def solve(n, k, grafo, p, rango):
 
 def main():
     n, k = map(int, stdin.readline().split())
-    p, rango = [0 for _ in range(100)], [0 for _ in range(100)]
     while(n != 0):
         grafo = []
         for _  in range(k):
@@ -63,7 +74,7 @@ def main():
         if(k == 0):
             print("-1")
         else:
-            print(solve(n, k, grafo, p, rango))
+            print(solve(n, k, grafo))
         n, k = map(int, stdin.readline().split())
 
 main()
