@@ -56,7 +56,7 @@ pair <vector<Arista>, int> Kruskal(int n, vector<Arista>& aristas, int start){
     for (int i = 0; i < n-1; i++) mst[i].peso = 0;
     bool flag = true;
 
-    while(start != aristas.size() and flag){
+    while(start != aristas.size() && flag){
         if(findSet(aristas[start].origen) != findSet(aristas[start].destino)){
             unionSet(aristas[start].origen, aristas[start].destino);
             //cout << aristas[start].origen << " " << aristas[start].destino << endl;
