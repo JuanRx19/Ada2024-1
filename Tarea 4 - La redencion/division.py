@@ -3,11 +3,36 @@
 
 from sys import stdin
 
+"""def binarysearch(dividendo, low, hi, x):
+    ans = 0
+    if(low == hi):
+        ans = x << low, 1 << low
+    elif(low+1 == hi):
+        ans = x << low, 1 << low
+    else:
+        mid = low + ((hi-low)>>1)
+        if(x << mid <= dividendo):
+            ans = binarysearch(dividendo, mid, hi, x)
+        else:
+            ans = binarysearch(dividendo, low, mid, x)
+    return ans"""
+
+def division(dividendo, divisor):
+    cociente = 0
+    while(dividendo >= divisor):
+        potencia = 0
+        while(divisor << potencia <= dividendo):
+            potencia+=1
+        potencia -= 1
+        cociente += 1 << potencia
+        dividendo -= divisor << potencia
+    return cociente
+
 def solve(P, N, A):
     A.sort(key=lambda x: (x[0], -x[1]))
     cont = 0
     for i in range(len(A)):
-        cont = P//N
+        cont = division(P, N)
         if cont < A[i][0]:
             A[i][0] = cont
         P -= A[i][0]
@@ -38,3 +63,17 @@ def main():
         C -= 1
 
 main()
+
+#val = 150140 >> 6
+#print(val)
+#val += 150140 >> 4
+#print(val)
+#val += 150140 >> 3
+#print(val)
+#val += 150140 >> 1
+#print(f"Division prueba: {val}")
+#print(f"Division original: {150140 // 90}")
+#resultado = (i >> 6)
+#resultado += (i >> 200)
+#print(resultado)
+#print(division(150140, 90))

@@ -1,1 +1,2 @@
-<
+
+resultado -= (resultado >> 2)

@@ -4,10 +4,12 @@
 from sys import stdin
 
 def solve(N, val):
+    sortVal = val.copy()
+    sortVal.sort()
     ans = 0
-    iterSort = 1
+    iterSort = 0
     for i in range(N):
-        if(val[i] != iterSort):
+        if(val[i] != sortVal[iterSort]):
             ans+=1
         else:
             iterSort+=1

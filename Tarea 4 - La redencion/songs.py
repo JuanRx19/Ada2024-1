@@ -3,25 +3,32 @@
 
 from sys import stdin
 
-def corregirDatos(C):
-    limite = len(C)-2
-    datos = []
+def obtenerDatos(C):
+    matriz = []
+    datos = list(map(float, stdin.readline().split()))
+    while(len(datos) != 1):
+        for i in range(0, len(datos)-1, 3):
+            matriz.append([datos[i], datos[i+1], datos[i+2]])
+        datos = list(map(float, stdin.readline().split()))
 
-    for i in range(0, limite, 3):
-        datos.append([int(C[i]), int(C[i+1]) / float(C[i+2])])
-    
-    return datos, int(C[len(C)-1])
+    songSelect = int(datos[0])
+    return matriz, songSelect
 
-def solve(C):
-    songs, indice = corregirDatos(C)
+def solve(songSelect, matriz):
+    songs = []
+    for i in range(len(matriz)):
+        songs.append((matriz[i][0], matriz[i][1]/matriz[i][2]))
     songs.sort(key = lambda x: x[1])
-    #print(songs)
-    return songs[indice-1][0]
+
+    return int(songs[songSelect-1][0])
+
 def main():
-    C = stdin.readline()
-    while(C != "\n"):
-        datos = stdin.readline()
-        print(solve(list(map(float, datos.split()))))
-        C = stdin.readline()
+    C = stdin.readline().strip()
+    matriz = []
+    while(C != ""):
+        C = int(C)
+        matriz, songSelect = obtenerDatos(C)
+        print(solve(songSelect, matriz))
+        C = stdin.readline().strip()
 
 main()
