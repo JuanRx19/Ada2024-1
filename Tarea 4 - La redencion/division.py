@@ -17,7 +17,7 @@ from sys import stdin
             ans = binarysearch(dividendo, low, mid, x)
     return ans"""
 
-def division(dividendo, divisor):
+"""def division(dividendo, divisor):
     cociente = 0
     while(dividendo >= divisor):
         potencia = 0
@@ -26,13 +26,13 @@ def division(dividendo, divisor):
         potencia -= 1
         cociente += 1 << potencia
         dividendo -= divisor << potencia
-    return cociente
+    return cociente"""
 
 def solve(P, N, A):
     A.sort(key=lambda x: (x[0], -x[1]))
     cont = 0
     for i in range(len(A)):
-        cont = division(P, N)
+        cont = P//N
         if cont < A[i][0]:
             A[i][0] = cont
         P -= A[i][0]
@@ -42,6 +42,7 @@ def solve(P, N, A):
 
 def main():
     C = int(stdin.readline())
+    A = []
     while C != 0:
         total = 0
         P, N = map(int, stdin.readline().split())
@@ -50,8 +51,7 @@ def main():
         for i in range(len(A)):
             total += A[i]
             A[i] = [A[i], i]
-
-        if total >= P:
+        if total >= P and N != 0:
             A = solve(P, N, A)
             for i in range(len(A)):
                 if len(A) - 1 != i:

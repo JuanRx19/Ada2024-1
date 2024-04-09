@@ -48,12 +48,14 @@ def main():
     act3 = [(16,20), (5,10), (12,11), (18, 6), (21,4), (3,14), (13, 19)]
     act4 = [(2, 2), (0, 4), (3, 23)]
     act5 = [(13, 14), (15, 16), (23, 18)]
+    act6 = [(4, 3), (2, 4), (10, 16)]
     act.sort(key = lambda x: x[1])
     act1.sort(key = lambda x: x[1])
     act2.sort(key = lambda x: x[1])
     act3.sort(key = lambda x: x[1])
     act4.sort(key = lambda x: x[1])
     act5.sort(key = lambda x: x[1])
+    act6.sort(key = lambda x: x[1])
     interval = (0, 0)
     print(solve(act, interval))
     print(phi(act, interval, True, interval, 0))
@@ -67,5 +69,7 @@ def main():
     print(phi(act4, interval, True, interval, 0))
     print(solve(act5, interval))
     print(phi(act5, interval, True, interval, 0))
+    print(solve(act6, interval))
+    print(phi(act6, interval, True, interval, 0))
 
 main()

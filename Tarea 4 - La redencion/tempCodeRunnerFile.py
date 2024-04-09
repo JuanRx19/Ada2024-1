@@ -1,2 +1,2 @@
-
-resultado -= (resultado >> 2)
+if not vis[v]:
+        
