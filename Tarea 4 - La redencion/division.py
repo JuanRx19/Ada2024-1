@@ -51,7 +51,8 @@ def main():
         for i in range(len(A)):
             total += A[i]
             A[i] = [A[i], i]
-        if total >= P and N != 0:
+            
+        if total >= P:
             A = solve(P, N, A)
             for i in range(len(A)):
                 if len(A) - 1 != i:

@@ -26,6 +26,31 @@ def solve(A, interval):
     i += 1
   return lans
 
+def convertirLineal(A):
+  
+  for i in range(len(A)):
+      temp = 0
+      if(A[i][0] >= A[i][1]):
+        temp = A[i][1] + 24
+        A[i] = (A[i][0], temp)
+
+  return A
+
+def solved(A, interval):
+  i = 0
+  ans = 0
+  lans = []
+  A = convertirLineal(A)
+  #print("Lista: ", A)
+  while i != len(A):
+    if A[i][0] >= interval[1]:
+      ans+=1
+      lans.append(A[i])
+      interval = A[i]
+    i+=1
+  
+  return lans, ans
+
 def phi(A, interval, medianoche, midnightEnd, i):
     ans = 0
     if(i == len(A)):
@@ -48,28 +73,35 @@ def main():
     act3 = [(16,20), (5,10), (12,11), (18, 6), (21,4), (3,14), (13, 19)]
     act4 = [(2, 2), (0, 4), (3, 23)]
     act5 = [(13, 14), (15, 16), (23, 18)]
-    act6 = [(4, 3), (2, 4), (10, 16)]
     act.sort(key = lambda x: x[1])
     act1.sort(key = lambda x: x[1])
     act2.sort(key = lambda x: x[1])
     act3.sort(key = lambda x: x[1])
     act4.sort(key = lambda x: x[1])
     act5.sort(key = lambda x: x[1])
-    act6.sort(key = lambda x: x[1])
     interval = (0, 0)
     print(solve(act, interval))
     print(phi(act, interval, True, interval, 0))
+    print(solved(act, interval))
+
     print(solve(act1, interval))
     print(phi(act1, interval, True, interval, 0))
+    print(solved(act1, interval))
+
     print(solve(act2, interval))
     print(phi(act2, interval, True, interval, 0))
+    print(solved(act2, interval))
+
     print(solve(act3, interval))
     print(phi(act3, interval, True, interval, 0))
+    print(solved(act3, interval))
+
     print(solve(act4, interval))
     print(phi(act4, interval, True, interval, 0))
+    print(solved(act4, interval))
+
     print(solve(act5, interval))
     print(phi(act5, interval, True, interval, 0))
-    print(solve(act6, interval))
-    print(phi(act6, interval, True, interval, 0))
+    print(solved(act5, interval))
 
 main()

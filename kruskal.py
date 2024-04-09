@@ -27,6 +27,8 @@ def unionSet(u, v):
 
 def kruskal(n, aristas):
   for i in range(1, n + 1): makeSet(i)
+  print(p)
+  
   aristas.sort(key = lambda x: x[2])
   mst = []
 
@@ -36,6 +38,7 @@ def kruskal(n, aristas):
     if findSet(u) != findSet(v):
       unionSet(u, v)
       mst.append(it)
+  
   return mst
 
 def solve():
