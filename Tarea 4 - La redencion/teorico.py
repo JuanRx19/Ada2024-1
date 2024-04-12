@@ -8,17 +8,17 @@ def solve(A, interval):
   lans = []
   while i != len(A):
     #print(f"{interval[1]} < {A[i][0]} and {interval[1]} < {A[i][1]}")
-    if(A[i][0] > interval[1] and medianoche and A[i][0] - A[i][1] >= 0):
+    if(A[i][0] >= interval[1] and medianoche and A[i][0] - A[i][1] >= 0):
       ans += 1
       interval = A[i]
       medianoche = False
-      mignightEnd = A[i]
+      midnightEnd = A[i]
       lans.append(A[i])
-    elif(A[i][0] > interval[1] and medianoche):
+    elif(A[i][0] >= interval[1] and medianoche):
       ans += 1
       interval = A[i]
       lans.append(A[i])
-    elif(not(medianoche) and interval[1] < A[i][0] and A[i][1] < mignightEnd[0] and A[i][0] - A[i][1] < 0):
+    elif(not(medianoche) and interval[1] <= A[i][0] and A[i][1] <= midnightEnd[0] and A[i][0] - A[i][1] < 0):
       ans += 1
       interval = A[i]
       lans.append(A[i])
@@ -26,41 +26,16 @@ def solve(A, interval):
     i += 1
   return lans
 
-def convertirLineal(A):
-  
-  for i in range(len(A)):
-      temp = 0
-      if(A[i][0] >= A[i][1]):
-        temp = A[i][1] + 24
-        A[i] = (A[i][0], temp)
-
-  return A
-
-def solved(A, interval):
-  i = 0
-  ans = 0
-  lans = []
-  A = convertirLineal(A)
-  #print("Lista: ", A)
-  while i != len(A):
-    if A[i][0] >= interval[1]:
-      ans+=1
-      lans.append(A[i])
-      interval = A[i]
-    i+=1
-  
-  return lans, ans
-
 def phi(A, interval, medianoche, midnightEnd, i):
     ans = 0
     if(i == len(A)):
         ans = 0
     else:
-        if(A[i][0] > interval[1] and medianoche and A[i][0] - A[i][1] >= 0):
+        if(A[i][0] >= interval[1] and medianoche and A[i][0] - A[i][1] >= 0):
             ans = 1 + phi(A, A[i], False, A[i], i+1)
-        elif(A[i][0] > interval[1] and medianoche):
+        elif(A[i][0] >= interval[1] and medianoche):
             ans = 1 + phi(A, A[i], medianoche, midnightEnd, i+1)
-        elif(not(medianoche) and interval[1] < A[i][0] and A[i][1] < midnightEnd[0] and A[i][0] - A[i][1] < 0):
+        elif(not(medianoche) and interval[1] <= A[i][0] and A[i][1] <= midnightEnd[0] and A[i][0] - A[i][1] < 0):
            ans = 1 + phi(A, A[i], medianoche, midnightEnd, i+1)
         else:
            ans = phi(A, interval, medianoche, midnightEnd, i+1)
@@ -72,7 +47,7 @@ def main():
     act2 = [(1,3),(4,20),(21,2)]
     act3 = [(16,20), (5,10), (12,11), (18, 6), (21,4), (3,14), (13, 19)]
     act4 = [(2, 2), (0, 4), (3, 23)]
-    act5 = [(13, 14), (15, 16), (23, 18)]
+    act5 = [(13, 14), (15, 16), (23, 13)]
     act.sort(key = lambda x: x[1])
     act1.sort(key = lambda x: x[1])
     act2.sort(key = lambda x: x[1])
@@ -82,26 +57,26 @@ def main():
     interval = (0, 0)
     print(solve(act, interval))
     print(phi(act, interval, True, interval, 0))
-    print(solved(act, interval))
+    #print(solved(act, interval))
 
     print(solve(act1, interval))
     print(phi(act1, interval, True, interval, 0))
-    print(solved(act1, interval))
+    #print(solved(act1, interval))
 
     print(solve(act2, interval))
     print(phi(act2, interval, True, interval, 0))
-    print(solved(act2, interval))
+    #print(solved(act2, interval))
 
     print(solve(act3, interval))
     print(phi(act3, interval, True, interval, 0))
-    print(solved(act3, interval))
+    #print(solved(act3, interval))
 
     print(solve(act4, interval))
     print(phi(act4, interval, True, interval, 0))
-    print(solved(act4, interval))
+    #print(solved(act4, interval))
 
     print(solve(act5, interval))
     print(phi(act5, interval, True, interval, 0))
-    print(solved(act5, interval))
+    #print(solved(act5, interval))
 
 main()
