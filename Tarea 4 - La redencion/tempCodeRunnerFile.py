@@ -1,1 +1,1 @@
-A[i][1] >= interval[0] or A[i][0] >= interval[1]
+ or

@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <limits>
 #define ini vector<int>
-int dp[105][2505];
+int dp[100 + 10][2500 + 10];
 #define INF -2147483648;
 using namespace std;
 
@@ -20,9 +20,9 @@ int solve(ini A, int n, int x)
         ans = dp[n][x];
     }
     else{
-        if(n == 0){
+        if(n == 0 && x > 0){
             ans = INF;
-        }else if(x <= 0){
+        }else if(n == 0 || x <= 0){
             ans = x;
         }else{
             ans = max(solve(A, n-1, x - (A[n-1])), solve(A, n-1, x));
@@ -46,7 +46,7 @@ int main()
             cin >> A[i];
         }
 
-        printf("%d", calories + (solve(A, tam, calories) * -1));
+        cout << calories + (solve(A, tam, calories) * -1) << endl;
         C--;
     }
 }

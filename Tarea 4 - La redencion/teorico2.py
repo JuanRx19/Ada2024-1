@@ -16,12 +16,12 @@ def solve(A, interval):
   lans = []
   while i != len(A):
     #print(f"{interval[1]} < {A[i][0]} and {interval[1]} < {A[i][1]}")
-    if(A[i][0] >= interval[1] and medianoche and A[i][0] - A[i][1] >= 0):
+    if((A[i][0] >= interval[1] and A[i][1] <= interval[0]) and medianoche and A[i][0] - A[i][1] >= 0):
       ans += 1
       interval = A[i]
       medianoche = False
       lans.append((A[i][0], A[i][1]))
-    elif((A[i][1] <= interval[0] or A[i][0] <= interval[1]) and medianoche):
+    elif((A[i][0] >= interval[1] or A[i][1] <= interval[0]) and medianoche and A[i][0] - A[i][1] < 0):
       ans += 1
       interval = A[i]
       lans.append((A[i][0], A[i][1]))
@@ -43,7 +43,6 @@ def main():
   act4 = [(2, 2), (0, 4), (3, 23)]
   act5 = [(13, 14), (15, 16), (23, 13)]
   act6 = [(17, 2), (2, 3), (18, 20), (20, 22)]
-  act7 = [(16,20), (5,10), (12,11), (18, 6), (21,4), (3,14), (13, 19)]
   act = tiempoDuracion(act)
   act1 = tiempoDuracion(act1)
   act2 = tiempoDuracion(act2)
@@ -51,7 +50,6 @@ def main():
   act4 = tiempoDuracion(act4)
   act5 = tiempoDuracion(act5)
   act6 = tiempoDuracion(act6)
-  act7 = tiempoDuracion(act7)
   act.sort(key = lambda x: x[2])
   act1.sort(key = lambda x: x[2])
   act2.sort(key = lambda x: x[2])
@@ -59,13 +57,11 @@ def main():
   act4.sort(key = lambda x: x[2])
   act5.sort(key = lambda x: x[2])
   act6.sort(key = lambda x: x[2])
-  act7.sort(key = lambda x: x[2])
   interval = (0, 0)
   #print(act)
   print(solve(act, interval))
   print(solve(act1, interval))
+  print(solve(act3, interval))
   print(solve(act6, interval))
-  #print(act7)
-  print(solve(act7, interval))
   
 main()
