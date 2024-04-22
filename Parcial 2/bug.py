@@ -60,7 +60,7 @@ def main():
        for j in range(i, len(sensors) + 1):
           if(i != j):
             grafo.append((i, j, dist(sensors[i-1], sensors[j-1])))
-    
+    print(grafo)
     print(kruskal(len(grafo), grafo, len(sensors) - receiver))
 
 main()
