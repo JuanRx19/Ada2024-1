@@ -29,45 +29,48 @@ def automata(value):
 
 def getbits(prev):
   temp = []
+  temp.append(prev[len(prev) - 3])
   temp.append(prev[len(prev) - 2])
   temp.append(prev[len(prev) - 1])
-  temp.append(prev[0])
 
   return "".join(temp)
 
-def conflict(rules, bits, value):
+def conflict(rules, bits, value, prev):
   ans = None
-
+  #print(prev,rules[binarytovalue(bits)], value)
   if(rules[binarytovalue(bits)] == value):
     ans = True
   else:
     ans = False
   
   return ans
-
-def solve(rules, tam, cadena, i, prev):
+  
+def solve(rules, tam, cadena, i, prev, id):
   ans = None
   if(i == tam):
-    ver1 = [prev[len(prev)-1], prev[0], prev[1]]
-    ver2 = [prev[0], prev[1], prev[2]]
-    #print("Entra")
-    if(conflict(rules, "".join(ver1), cadena[0]) and conflict(rules, "".join(ver2), cadena[1])):
-      #print(prev)
+    #ans = True
+    #print(prev)
+    ver1 = "".join([prev[len(prev)-1], prev[0], prev[1]])
+    ver2 = "".join([prev[len(prev)-2], prev[len(prev)-1], prev[0]])
+    if(conflict(rules, ver1, cadena[0], prev) and conflict(rules, ver2, cadena[len(prev)-1], prev)):
+      #print("Entra ", prev)
       ans = True
     else:
       ans = False
   else:
     ans = False
-    for bit in range(2):
+    bit = 0
+    while(not(ans) and bit < 2):
       if(bit == 0):
         prev.append('0')
       else:
         prev.append('1')
       if(i < 2):
-        ans = solve(rules, tam, cadena, i + 1, prev)
-      elif(i >= 2 and conflict(rules, getbits(prev), cadena[i])):
-        ans = solve(rules, tam, cadena, i + 1, prev)
+        ans = solve(rules, tam, cadena, i + 1, prev, id)
+      elif(i >= 2 and conflict(rules, getbits(prev), cadena[i-1], prev)):
+        ans = solve(rules, tam, cadena, i + 1, prev, id)
       prev.pop()
+      bit+=1
   
   return ans
 
@@ -75,13 +78,13 @@ def main():
   line = stdin.readline().strip()
   while(line != ""):
     rules, tam, cadena = line.split()
-    if(solve(automata(int(rules)), int(tam), list(cadena), 0, [])):
+    if(solve(automata(int(rules)), int(tam), list(cadena), 0, [], int(rules))):
       print("REACHABLE")
     else:
       print("GARDEN OF EDEN")
     line = stdin.readline().strip()
 
 #print(getbits('110'))
-#print(automata(121))
+#print(automata(204))
 #print(binarytovalue('101'))
 main()

@@ -7,7 +7,7 @@
 using namespace std;
 
 bool verificar(vector<int>& values){
-  return values[0] != 0 && values[1] != 0 && values[2] != 0 && values[3] != 0 && values[4] != 0;
+  return !(values[0] == 0 && values[1] == 0 && values[2] == 0 && values[3] == 0 && values[4] == 0);
 }
 
 bool conflict(int count, int value, int x){
@@ -25,19 +25,19 @@ bool solve(vector<int>& values, int count, int i){
   bool ans;
   if (i == 0)
   {
-    ans = count == 23;
+    ans = count - values[0] == 0;
   }else{
     ans = false;
     int x = 1;
     while(!(ans) && x < 4){
-      if (true)
+      if (conflict(count, values[i], x))
       {
         if(x == 1){
-          ans = solve(values, count + values[i], i - 1);
-        }else if(x == 2){
           ans = solve(values, count - values[i], i - 1);
+        }else if(x == 2){
+          ans = solve(values, count + values[i], i - 1);
         }else{
-          ans = solve(values, count * values[i], i - 1);
+          ans = solve(values, count / values[i], i - 1);
         }
       }
       x++;
@@ -48,8 +48,8 @@ bool solve(vector<int>& values, int count, int i){
 }
 
 int main(){
-  freopen("outin.txt", "r", stdin);
-  freopen("outout.txt", "w", stdout);
+  //freopen("outin.txt", "r", stdin);
+  //freopen("outout.txt", "w", stdout);
   bool ans;
   vector<int> values(5);
   for (int i = 0; i < 5; i++)
@@ -61,7 +61,7 @@ int main(){
     ans = false;
     do
     {
-      ans = solve(values, values[0], 4);
+      ans = solve(values, 23, 4);
     } while (!(ans) && next_permutation(values.begin(), values.end()));
 
     if(ans){

@@ -38,6 +38,8 @@ def conflict(count, value, x):
 def solve(values, count, i):
   ans = None
   if(i == 0):
+    if(count - values[0] == 0):
+      print(count)
     ans = count - values[0] == 0
   else:
     ans = False
