@@ -14,7 +14,9 @@ def solve(n, l0, l1, mov, intervalo, i, N, lado, mem):
     elif(n == N << 1 or l0 > N or l1 > N):
       ans = float('inf')
     else:
-      if(i < len(intervalo) and mov != len(intervalo) and n >= intervalo[i][0] and n <= intervalo[i][1]):
+      if(n == N and n >= intervalo[i][0] and n <= intervalo[i][1]):
+        ans = solve(N << 1, N, N, 1, intervalo, i, N, lado, mem)
+      elif(i < len(intervalo) and mov != len(intervalo) and n >= intervalo[i][0] and n <= intervalo[i][1]):
         if(n >= intervalo[i][0] and n < intervalo[i][1] and lado == 0):
           ans = min(solve(n + 1, l0 + 1, l1, mov + 1, intervalo, i, N, 1 - lado, mem), solve(n + 1, l0 + 1, l1, mov, intervalo, i, N, lado, mem))
         elif(n >= intervalo[i][0] and n < intervalo[i][1] and lado == 1):

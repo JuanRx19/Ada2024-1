@@ -1,4 +1,4 @@
-"""def solve(n, l0, l1, mov, intervalo, i, N, lado):
+def solve(n, l0, l1, mov, intervalo, i, N, lado):
   ans = None
   if(n == N << 1 and l0 == N and l1 == N):
     #print(l0, l1, mov, giro)
@@ -21,7 +21,7 @@
       else:
         ans = solve(n + 1, l0, l1 + 1, mov, intervalo, i, N, lado)
   
-  return ans"""
+  return ans
 
 """def solve(n, l0, l1, mov, intervalo, i, N, lado, mem):
   ans = None
@@ -61,7 +61,7 @@
 
   return ans"""
 
-def solve(l0, l1, mov, intervalo, i, N, lado):
+"""def solve(l0, l1, mov, intervalo, i, N, lado):
   if(l0 == N):
     print(l0, l1, intervalo, mov)
     ans = mov
@@ -86,16 +86,17 @@ def solve(l0, l1, mov, intervalo, i, N, lado):
         #print(l0, l1)
         ans = solve(l0, l1 + (2 * N - l1 - l0), mov, intervalo, len(intervalo), N, lado)
   
-  return ans
+  return ans"""
+
 def main():
   #print(solve(0, 0, 0, [(2, 4), (6, 9), (11, 15)], 0, 10, 0))
   #print(solve(0, 0, 0, [(2, 5), (35, 38)], 0, 20, 0))
-  print(solve(0, 0, 0, [(1, 2), (23, 23), (38, 43)], 0, 25, 0))
+  #print(solve(0, 0, 0, [(1, 2), (23, 23), (38, 43)], 0, 25, 0))
   #print(solve(0, 0, 0, [(4, 5), (13, 15), (22, 24)], 0, 15, 0))
-  #print(solve(0, 0, 0, 0, [(2, 4), (6, 9), (11, 15)], 0, 10, 0))
-  #print(solve(0, 0, 0, 0, [(2, 5), (35, 38)], 0, 20, 0))
-  #print(solve(0, 0, 0, 0, [(1, 2), (23, 23), (38, 43)], 0, 25, 0))
-  #print(solve(0, 0, 0, 0, [(4, 5), (13, 15), (22, 24)], 0, 15, 0))
+  print(solve(0, 0, 0, 0, [(2, 4), (6, 9), (11, 15)], 0, 10, 0))
+  print(solve(0, 0, 0, 0, [(2, 5), (35, 38)], 0, 20, 0))
+  print(solve(0, 0, 0, 0, [(1, 2), (23, 23), (38, 43)], 0, 25, 0))
+  print(solve(0, 0, 0, 0, [(4, 5), (13, 15), (22, 24)], 0, 15, 0))
   #print(solve(0, 0, 0, 0, [(1, 2), (3, 4), (5, 6)], 0, 6, 0))
 
 main()
