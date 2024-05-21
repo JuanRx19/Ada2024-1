@@ -235,6 +235,37 @@ def solve(l0, l1, mov, intervalo, i, j, N, lado, mem):
   
   return ans"""
 
+#Funca versión vieja
+"""
+if((l0, l1, mov) in mem):
+    ans = mem[(l0, l1, mov)]
+  else:
+    if(l0 == N):
+      if(l1 != N):
+        ans = mov + 1
+      else:
+        ans = mov
+    elif(l0 > N or l1 > N):
+      ans = float('inf')
+    else:
+      if(i != len(intervalo) and mov != len(intervalo)):
+        value, i, j = convertir(intervalo[i], i, j)
+        if(lado == 0):
+          ans = min(solve(l0 + abs(value - l1 - l0), l1, mov + 1, intervalo, i, j, N, 1 - lado, mem),
+                    solve(l0 + abs(value - l1 - l0), l1, mov, intervalo, i, j, N, lado, mem))
+        else:
+          ans = min(solve(l0, l1 + abs(value - l1 - l0), mov + 1, intervalo, i, j, N, 1 - lado, mem),
+                    solve(l0, l1 + abs(value - l1 - l0), mov, intervalo, i, j, N, lado, mem))
+      else:
+        if(lado == 0):
+          ans = solve(l0 + abs(2 * N - l0 - l1), l1, mov, intervalo, len(intervalo), j, N, lado, mem)
+        else:
+          ans = solve(l0, l1 + abs(2 * N - l1 - l0), mov, intervalo, len(intervalo), j, N, lado, mem)
+    mem[(l0, l1, mov)] = ans
+  
+  return ans
+  """
+
 def main():
   pass
   #print(solve(0, 0, 0, [(2, 4), (6, 9), (11, 15)], 0, 0, 10, 0))
