@@ -8,43 +8,31 @@ from sys import stdin
 
 INF = 100005
 
-def convertir(interval, i, j):
+def solve(l, i, intervalo, N, mem):
   """
-  Esta función define el paso siguiente a dar entre los intervalos, si el limite inferior es igual al
-  superior, entonces debo pasar al siguiente intervalo. Por ejemplo, si tengo (4, 4) significa que no tengo mas valores
-  para buscar dentro del intervalo (4, 4), por lo que avanzo al siguiente intervalo.
-  
-  Parametros: interval --> tupla con el limite inferior y superior.
-              i --> el intervalo en el que se encuentra.
-              j --> el valor a sumar al limite inferior.
-  
-  Retorna: La suma del limite inferior + j, el intervalo y el valor a sumar en la siguiente recurrencia.
-  """
-  value = (interval[0] + j)
-  if((interval[0] + j) != interval[1]):
-    j += 1
-  else:
-    j = 0
-    i += 1
-  return value, i, j
+  Minima cantidad de movimientos para concinar el
+  lado l de la hamburguesa n - l minutos en i intervalos.
 
-def solve(l0, l1, intervalo, i, j, N, mem):
-  if((l0, l1, i) in mem):
-    ans = mem[(l0, l1, i)]
+  Parametros: l --> Lado de la hamburguesa
+              i --> el intervalo en el que me encuentro
+
+  """
+
+  if((l, i) in mem):
+    ans = mem[(l, i)]
   else:
-    if(l0 == N):
-      if(l1 != N):
-        ans = 1
-      else:
-        ans = 0
-    elif(i == len(intervalo) or l0 > N or l1 > N):
+    if(l == N):
+      ans = 0
+    elif(i == len(intervalo) or l > N):
       ans = INF
     else:
-      value, i, j = convertir(intervalo[i], i, j)
-      ans = min(solve(l1, l0 + (value - (l1 + l0)), intervalo, i, j, N, mem) + 1,
-                solve(l0 + (value - (l1 + l0)), l1, intervalo, i, j, N, mem))
-    mem[(l0, l1, i)] = ans
-
+      ans = solve(l, i + 1, intervalo, N, mem)
+      li, ls = intervalo[i][0], intervalo[i][1] + 1
+      for x in range(li, ls):
+        ans = min(ans, solve(x - l, i + 1, intervalo, N, mem) + 1)
+        if(x != ls-1): #No es correcto hacer 2 movimientos en un mismo minuto, si x es 10 y el ls es 10 no tiene sentido hacer 2 movimientos
+          ans = min(ans, solve(l + ((ls-1) - x), i + 1, intervalo, N, mem) + 2)
+    mem[(l, i)] = ans
   return ans
 
 def main():
@@ -62,7 +50,8 @@ def main():
       l0, l1 = map(int, stdin.readline().split())
       intervalo.append((l0, l1))
     #ans = solve(0, 0, 0, intervalo, 0, 0, N, 0, {})
-    ans = solve(0, 0, intervalo, 0, 0, N, {})
+    #ans = solve(0, 0, intervalo, 0, 0, N, {})
+    ans = solve(0, 0, intervalo, N, {})
     if(ans != INF):
       print("Perfect burger!")
       print(ans)

@@ -266,6 +266,46 @@ if((l0, l1, mov) in mem):
   return ans
   """
 
+"""
+def convertir(interval, i, j):
+  
+  Esta función define el paso siguiente a dar entre los intervalos, si el limite inferior es igual al
+  superior, entonces debo pasar al siguiente intervalo. Por ejemplo, si tengo (4, 4) significa que no tengo mas valores
+  para buscar dentro del intervalo (4, 4), por lo que avanzo al siguiente intervalo.
+  
+  Parametros: interval --> tupla con el limite inferior y superior.
+              i --> el intervalo en el que se encuentra.
+              j --> el valor a sumar al limite inferior.
+  
+  Retorna: La suma del limite inferior + j, el intervalo y el valor a sumar en la siguiente recurrencia.
+  
+  value = (interval[0] + j)
+  if((interval[0] + j) != interval[1]):
+    j += 1
+  else:
+    j = 0
+    i += 1
+  return value, i, j
+
+def solve(l0, l1, intervalo, i, j, N, mem):
+  if((l0, l1, i) in mem):
+    ans = mem[(l0, l1, i)]
+  else:
+    if(l0 == N):
+      if(l1 != N):
+        ans = 1
+      else:
+        ans = 0
+    elif(i == len(intervalo) or l0 > N or l1 > N):
+      ans = INF
+    else:
+      value, i, j = convertir(intervalo[i], i, j)
+      ans = min(solve(l1, l0 + (value - (l1 + l0)), intervalo, i, j, N, mem) + 1,
+                solve(l0 + (value - (l1 + l0)), l1, intervalo, i, j, N, mem))
+    mem[(l0, l1, i)] = ans
+
+  return ans
+"""
 def main():
   pass
   #print(solve(0, 0, 0, [(2, 4), (6, 9), (11, 15)], 0, 0, 10, 0))
