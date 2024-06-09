@@ -35,6 +35,20 @@ def solve(l, i, intervalo, N, mem):
     mem[(l, i)] = ans
   return ans
 
+def solvedcc(l, i, intervalo, N, mem):
+  if(l == N):
+    ans = 0
+  elif(i == len(intervalo) or l > N):
+    ans = INF
+  else:
+    ans = solve(l, i + 1, intervalo, N, mem)
+    li, ls = intervalo[i][0], intervalo[i][1] + 1
+    for x in range(li, ls):
+      ans = min(ans, solve(x - l, i + 1, intervalo, N, mem) + 1)
+      if(x != ls-1):
+        ans = min(ans, solve(l + ((ls-1) - x), i + 1, intervalo, N, mem) + 2)
+  return ans
+
 def main():
   """
   Esta función recibe los valores correspondientes a la entrada
